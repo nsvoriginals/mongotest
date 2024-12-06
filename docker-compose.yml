@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+
+  app:
+    build: .
+    container_name: app_container
+    depends_on:
+      - mongo
+    environment:
+      - MUSER=admin
+      - MPASS=mongo
+      - MCONT=mongo_container
+    ports:
+      - '3000:3000'
